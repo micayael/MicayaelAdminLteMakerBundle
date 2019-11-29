@@ -1,0 +1,13 @@
+{% if pagination.getTotalItemCount > pagination.getItemNumberPerPage %}
+    <div class="pagination">
+        <div class="count">
+            Se muestran
+            {{ pagination.getCurrentPageNumber * pagination.getItemNumberPerPage }}
+            de un total de
+            {{ pagination.getTotalItemCount }}
+        </div>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+{% endif %}

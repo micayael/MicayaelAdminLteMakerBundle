@@ -1,0 +1,8 @@
+<ol class="breadcrumb">
+    {% block home %}
+        <li>
+            <i class="fas fa-home"></i> <a href="{{ path('adminlte_welcome'|route_alias) }}">{{ 'home'|trans }}</a>
+        </li>
+    {% endblock %}
+    {% block content %}{% endblock %}
+</ol>

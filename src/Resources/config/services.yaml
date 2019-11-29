@@ -1,0 +1,14 @@
+services:
+
+    Micayael\AdminLteMakerBundle\Maker\MakeCrud:
+        arguments: ['@maker.doctrine_helper', '@maker.renderer.form_type_renderer', '%bundle_config%']
+        calls:
+            - [configureCommand, ['@security.command.user_password_encoder', '@?']]
+            - [interact, ['@?', '@?', '@security.command.user_password_encoder']]
+        tags:
+            - { name: maker.command }
+
+    Micayael\AdminLteMakerBundle\Twig\MicayaelAdminLteMakerExtension:
+        arguments: ['@router', '@translator', '@security.authorization_checker']
+        tags:
+            - { name: twig.extension }

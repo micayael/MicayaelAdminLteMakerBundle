@@ -1,0 +1,24 @@
+app_name: AppName
+app_long_name: Application Name
+home: Inicio
+
+crud:
+    title:
+        index: '%entity_class_name_plural%'
+        new: 'Crear %entity_class_name%'
+        show: '%entity_class_name%'
+        edit: 'Modificar %entity_class_name%'
+        delete: 'Eliminar %entity_class_name%'
+    action:
+        index: Volver al Listado
+        new: Agregar Nuevo
+        show: Visualizar
+        edit: Modificar
+        delete: Eliminar
+        delete_confirm: Sí, Eliminar
+        save: Grabar
+    list:
+        no_records_found: No se encontraron registros
+        actions: Acciones
+    delete:
+        are_you_sure: ¿Estás seguro de eliminar este registro?
