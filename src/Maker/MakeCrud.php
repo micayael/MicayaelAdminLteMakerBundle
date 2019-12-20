@@ -152,18 +152,6 @@ class MakeCrud extends AbstractMaker
             $entityClassDetails
         );
 
-        // BaseController
-
-        if(!class_exists('\App\Framework\Base\BaseController')){
-
-            $generator->generateController(
-                'App\Framework\Base\BaseController',
-                __DIR__.'/../Resources/skeleton/crud/base/BaseController.tpl.php',
-                []
-            );
-
-        }
-
         // Controllers
 
         $controllers = [
@@ -184,7 +172,6 @@ class MakeCrud extends AbstractMaker
         $templatesPath = $entityTwigVarSingular;
 
         foreach ($controllers as $controller) {
-
             $controllerCapitalize = ucfirst($controller);
 
             $controllerClassDetails = $generator->createClassNameDetails(
@@ -214,7 +201,6 @@ class MakeCrud extends AbstractMaker
                     $repositoryVars
                 )
             );
-
         }
 
         // Templates
@@ -286,7 +272,7 @@ class MakeCrud extends AbstractMaker
             [
                 'route_name' => $routeName,
                 'entity_class_name' => $entityClassDetails->getRelativeNameWithoutSuffix(),
-                'url_context' => $this->bundleConfig['url_context']
+                'url_context' => $this->bundleConfig['url_context'],
             ]
         );
 
@@ -294,6 +280,6 @@ class MakeCrud extends AbstractMaker
 
         $this->writeSuccessMessage($io);
 
-        $io->text(sprintf('Next: Check your new CRUD by going to <fg=yellow>%s/</>', $this->bundleConfig['url_context'] . $routeName));
+        $io->text(sprintf('Next: Check your new CRUD by going to <fg=yellow>%s/</>', $this->bundleConfig['url_context'].$routeName));
     }
 }

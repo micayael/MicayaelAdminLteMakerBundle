@@ -3,9 +3,7 @@
 namespace Micayael\AdminLteMakerBundle\Twig;
 
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -66,8 +64,7 @@ class MicayaelAdminLteMakerExtension extends AbstractExtension
 
     public function createLinkFunction(string $type, string $route, ?array $routeArgs = [], ?string $role = null)
     {
-        if(!$role || ($role  && ($this->authorization->isGranted('ROLE_SUPER_ADMIN') || $this->authorization->isGranted($role)))){
-
+        if (!$role || ($role && ($this->authorization->isGranted('ROLE_SUPER_ADMIN') || $this->authorization->isGranted($role)))) {
             $ret = sprintf(
                 '<a href="%s"><i class="%s" aria-hidden="true"></i> %s</a>',
                 $this->router->generate($route, $routeArgs),
@@ -76,14 +73,12 @@ class MicayaelAdminLteMakerExtension extends AbstractExtension
             );
 
             return $ret;
-
         }
     }
 
     public function createButtonFunction(string $type, string $route, ?array $routeArgs = [], ?string $role = null)
     {
-        if(!$role || ($role  && ($this->authorization->isGranted('ROLE_SUPER_ADMIN') || $this->authorization->isGranted($role)))){
-
+        if (!$role || ($role && ($this->authorization->isGranted('ROLE_SUPER_ADMIN') || $this->authorization->isGranted($role)))) {
             $ret = sprintf(
                 '<a href="%s" class="btn btn-%s"><i class="%s" aria-hidden="true"></i> %s</a>',
                 $this->router->generate($route, $routeArgs),
@@ -93,14 +88,12 @@ class MicayaelAdminLteMakerExtension extends AbstractExtension
             );
 
             return $ret;
-
         }
     }
 
     public function createExtraButtonFunction(string $name, ?string $role = null, ?string $class = null, ?string $icon = null)
     {
-        if(!$role || ($role  && ($this->authorization->isGranted('ROLE_SUPER_ADMIN') || $this->authorization->isGranted($role)))){
-
+        if (!$role || ($role && ($this->authorization->isGranted('ROLE_SUPER_ADMIN') || $this->authorization->isGranted($role)))) {
             $ret = sprintf(
                 '<button class="btn btn-%s"><i class="%s"></i> %s</button>',
                 $class,
@@ -109,7 +102,6 @@ class MicayaelAdminLteMakerExtension extends AbstractExtension
             );
 
             return $ret;
-
         }
     }
 
@@ -118,16 +110,15 @@ class MicayaelAdminLteMakerExtension extends AbstractExtension
         $trueClass = 'success';
         $falseClass = 'danger';
 
-        if($inverted){
+        if ($inverted) {
             $trueClass = 'danger';
             $falseClass = 'success';
         }
 
-        if($bool){
+        if ($bool) {
             return '<span class="label label-'.$trueClass.'">Si</span>';
-        }else{
+        } else {
             return '<span class="label label-'.$falseClass.'">No</span>';
         }
     }
-
 }

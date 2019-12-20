@@ -1,52 +1,42 @@
-<?= "<?php\n" ?>
+<?= "<?php\n"; ?>
 
-namespace <?= $namespace ?>;
+namespace <?= $namespace; ?>;
 
-use App\Framework\Base\BaseController;
-use <?= $entity_full_class_name ?>;
-use <?= $form_full_class_name ?>;
-use Micayael\AdminLteMakerBundle\Event\MicayaelAdminLteMakerEvents;
-use Micayael\AdminLteMakerBundle\Event\MicayaelAdminLteMakerCrudEvent;
+use <?= $form_full_class_name; ?>;
+use <?= $repository_full_class_name; ?>;
+use Micayael\AdminLteMakerBundle\Framework\Base\CRUD\UpdaterController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\<?= $parent_class_name ?>;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
-* @Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_<?= $entity_class_name_upper ?>_UPDATE')")
+* @Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_<?= $entity_class_name_upper; ?>_UPDATE')")
 */
-class <?= $class_name ?> extends BaseController
+class <?= $class_name; ?> extends UpdaterController
 {
-
-    private $eventDispatcher;
-
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    /**
+    * @required
+    */
+    public function setRepository(<?= $repository_class_name; ?> $<?= $repository_var; ?>): void
     {
-        $this->eventDispatcher = $eventDispatcher;
+        $this->repository = $<?= $repository_var; ?>;
     }
 
-    public function __invoke(Request $request, <?= $entity_class_name ?> $<?= $entity_var_singular ?>): Response
+    protected function getSubjectName(): string
     {
-        $form = $this->createForm(<?= $form_class_name ?>::class, $<?= $entity_var_singular ?>);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $event = new MicayaelAdminLteMakerCrudEvent($form->getData());
-            $this->eventDispatcher->dispatch($event, MicayaelAdminLteMakerEvents::MICAYAEL_ADMIN_LTE_MAKER_EDIT_PRE_UPDATE);
-
-            $this->getDoctrine()->getManager()->flush();
-
-            $this->addFlash('success', 'Registro grabado con éxito');
-
-            return $this->redirectToRoute('<?= $route_name ?>_index');
-        }
-
-        return $this->render('<?= $templates_path ?>/edit.html.twig', [
-            '<?= $entity_twig_var_singular ?>' => $<?= $entity_var_singular ?>,
-            'form' => $form->createView(),
-        ]);
+        return '<?= $entity_twig_var_singular; ?>';
     }
 
+    protected function getSubjectFormTypeClass(): string
+    {
+        return <?= $form_class_name; ?>::class;
+    }
+
+    protected function getTargetRouteName(): string
+    {
+        return '<?= $route_name; ?>_index';
+    }
+
+    protected function getTemplateName(): string
+    {
+        return '<?= $templates_path; ?>/edit.html.twig';
+    }
 }

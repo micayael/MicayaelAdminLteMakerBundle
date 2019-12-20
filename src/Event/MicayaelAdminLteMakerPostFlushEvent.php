@@ -8,7 +8,7 @@ class MicayaelAdminLteMakerPostFlushEvent extends Event
 {
     private $data;
 
-    public function __construct($data=null)
+    public function __construct($data = null)
     {
         $this->data = $data;
     }
@@ -28,5 +28,4 @@ class MicayaelAdminLteMakerPostFlushEvent extends Event
     {
         $this->data = $data;
     }
-
 }

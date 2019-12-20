@@ -17,6 +17,10 @@ crud:
         delete: Eliminar
         delete_confirm: Sí, Eliminar
         save: Grabar
+    msg:
+        new: Registro creado con éxito.
+        edit: Registro actualizado con éxito.
+        delete: Registro eliminado con éxito.
     list:
         no_records_found: No se encontraron registros
         actions: Acciones

@@ -2,7 +2,7 @@
 
 {% block page_title %}
 
-    {{ 'crud.title.edit'|trans({'%entity_class_name%': '<?= $entity_class_name ?>'}, 'MicayaelAdminLteMakerBundle') }}
+    {{ 'crud.title.edit'|trans({'%entity_class_name%': '<?= $entity_class_name; ?>'}, 'MicayaelAdminLteMakerBundle') }}
 
 {% endblock %}
 
@@ -11,7 +11,7 @@
     {% embed '@MicayaelAdminLteMaker/Widgets/breadcrumb.html.twig' %}
 
         {% block content %}
-            <li><a href="{{ path('<?= $route_name ?>_index') }}"><?= $entity_class_name_plural ?></a></li>
+            <li><a href="{{ path('<?= $route_name; ?>_index') }}"><?= $entity_class_name_plural; ?></a></li>
             <li class="active">{{ 'crud.action.edit'|trans({}, 'MicayaelAdminLteMakerBundle') }}</li>
         {% endblock %}
 
@@ -26,12 +26,16 @@
 
             {% embed '@MicayaelAdminLteMaker/Widgets/context_menu.html.twig' %}
 
+                {% block brand %}
+                    {{ <?= $entity_twig_var_singular; ?> }}
+                {% endblock %}
+
                 {% block actions %}
                     <li>
-                        {{ create_link('show', '<?= $route_name ?>_show', {'<?= $entity_identifier ?>': <?= $entity_twig_var_singular ?>.<?= $entity_identifier ?>}, 'ROLE_<?= $entity_class_name_upper ?>_READ') }}
+                        {{ create_link('show', '<?= $route_name; ?>_show', {'<?= $entity_identifier; ?>': <?= $entity_twig_var_singular; ?>.<?= $entity_identifier; ?>}, 'ROLE_<?= $entity_class_name_upper; ?>_READ') }}
                     </li>
                     <li>
-                        {{ create_link('index', '<?= $route_name ?>_index', {}, 'ROLE_<?= $entity_class_name_upper ?>_READ') }}
+                        {{ create_link('index', '<?= $route_name; ?>_index', {}, 'ROLE_<?= $entity_class_name_upper; ?>_READ') }}
                     </li>
                 {% endblock %}
 
@@ -55,10 +59,10 @@
 
                     {% block box_footer %}
 
-                        {{ create_extra_button('crud.action.save', 'ROLE_<?= $entity_class_name_upper ?>_CREATE', 'primary', 'fas fa-save') }}
+                        {{ create_extra_button('crud.action.save', 'ROLE_<?= $entity_class_name_upper; ?>_CREATE', 'primary', 'fas fa-save') }}
 
                         <span class="pull-right">
-                            {{ create_button('delete', '<?= $route_name ?>_delete', {'<?= $entity_identifier ?>': <?= $entity_twig_var_singular ?>.<?= $entity_identifier ?>}, 'ROLE_<?= $entity_class_name_upper ?>_DELETE') }}
+                            {{ create_button('delete', '<?= $route_name; ?>_delete', {'<?= $entity_identifier; ?>': <?= $entity_twig_var_singular; ?>.<?= $entity_identifier; ?>}, 'ROLE_<?= $entity_class_name_upper; ?>_DELETE') }}
                         </span>
 
                     {% endblock %}

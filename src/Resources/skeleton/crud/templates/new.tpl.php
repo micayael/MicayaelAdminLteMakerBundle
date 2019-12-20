@@ -2,7 +2,7 @@
 
 {% block page_title %}
 
-    {{ 'crud.title.new'|trans({'%entity_class_name%': '<?= $entity_class_name ?>'}, 'MicayaelAdminLteMakerBundle') }}
+    {{ 'crud.title.new'|trans({'%entity_class_name%': '<?= $entity_class_name; ?>'}, 'MicayaelAdminLteMakerBundle') }}
 
 {% endblock %}
 
@@ -11,7 +11,7 @@
     {% embed '@MicayaelAdminLteMaker/Widgets/breadcrumb.html.twig' %}
 
         {% block content %}
-            <li><a href="{{ path('<?= $route_name ?>_index') }}"><?= $entity_class_name_plural ?></a></li>
+            <li><a href="{{ path('<?= $route_name; ?>_index') }}"><?= $entity_class_name_plural; ?></a></li>
             <li class="active">{{ 'crud.action.new'|trans({}, 'MicayaelAdminLteMakerBundle') }}</li>
         {% endblock %}
 
@@ -28,7 +28,7 @@
 
                 {% block actions %}
                     <li>
-                        {{ create_link('index', '<?= $route_name ?>_index', {}, 'ROLE_<?= $entity_class_name_upper ?>_READ') }}
+                        {{ create_link('index', '<?= $route_name; ?>_index', {}, 'ROLE_<?= $entity_class_name_upper; ?>_READ') }}
                     </li>
                 {% endblock %}
 
@@ -52,7 +52,7 @@
 
                     {% block box_footer %}
 
-                        {{ create_extra_button('crud.action.save', 'ROLE_<?= $entity_class_name_upper ?>_CREATE', 'primary', 'fas fa-save') }}
+                        {{ create_extra_button('crud.action.save', 'ROLE_<?= $entity_class_name_upper; ?>_CREATE', 'primary', 'fas fa-save') }}
 
                     {% endblock %}
 

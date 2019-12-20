@@ -1,10 +1,9 @@
-<?= "<?php\n" ?>
+<?php
 
-namespace App\Framework\Base;
+namespace Micayael\AdminLteMakerBundle\Framework\Base\CRUD;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BaseController extends AbstractController
 {
-
 }
