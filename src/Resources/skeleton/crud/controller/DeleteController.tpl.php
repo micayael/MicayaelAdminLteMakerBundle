@@ -2,6 +2,7 @@
 
 namespace <?= $namespace ?>;
 
+use App\Framework\Base\BaseController;
 use <?= $entity_full_class_name ?>;
 use Micayael\AdminLteMakerBundle\Event\MicayaelAdminLteMakerEvents;
 use Micayael\AdminLteMakerBundle\Event\MicayaelAdminLteMakerCrudEvent;
@@ -14,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
 * @Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_<?= $entity_class_name_upper ?>_DELETE')")
 */
-class <?= $class_name ?> extends <?= $parent_class_name; ?><?= "\n" ?>
+class <?= $class_name ?> extends BaseController
 {
 
     private $eventDispatcher;

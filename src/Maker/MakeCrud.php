@@ -152,6 +152,18 @@ class MakeCrud extends AbstractMaker
             $entityClassDetails
         );
 
+        // BaseController
+
+        if(!class_exists('\App\Framework\Base\BaseController')){
+
+            $generator->generateController(
+                'App\Framework\Base\BaseController',
+                __DIR__.'/../Resources/skeleton/crud/base/BaseController.tpl.php',
+                []
+            );
+
+        }
+
         // Controllers
 
         $controllers = [

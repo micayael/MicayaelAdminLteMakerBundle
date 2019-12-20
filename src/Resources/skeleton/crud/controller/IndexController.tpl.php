@@ -2,6 +2,7 @@
 
 namespace <?= $namespace ?>;
 
+use App\Framework\Base\BaseController;
 <?php if (isset($repository_full_class_name)): ?>
 use <?= $repository_full_class_name ?>;
 <?php endif ?>
@@ -14,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
 * @Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_<?= $entity_class_name_upper ?>_READ')")
 */
-class <?= $class_name ?> extends <?= $parent_class_name; ?><?= "\n" ?>
+class <?= $class_name ?> extends BaseController
 {
 
     private $paginator;

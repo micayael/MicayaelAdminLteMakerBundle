@@ -113,12 +113,20 @@ class MicayaelAdminLteMakerExtension extends AbstractExtension
         }
     }
 
-    public function booleanValueFunction(bool $bool)
+    public function booleanValueFunction(bool $bool, bool $inverted = false)
     {
+        $trueClass = 'success';
+        $falseClass = 'danger';
+
+        if($inverted){
+            $trueClass = 'danger';
+            $falseClass = 'success';
+        }
+
         if($bool){
-            return '<span class="label label-success">Si</span>';
+            return '<span class="label label-'.$trueClass.'">Si</span>';
         }else{
-            return '<span class="label label-danger">No</span>';
+            return '<span class="label label-'.$falseClass.'">No</span>';
         }
     }
 
