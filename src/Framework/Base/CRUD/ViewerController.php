@@ -15,13 +15,15 @@ abstract class ViewerController extends BaseController implements CRUDInterface
      */
     protected $repository;
 
+    abstract protected function getSubjectClass(): string;
+
     abstract protected function getSubjectName(): string;
 
     abstract protected function getTemplateName(): string;
 
     public function __invoke(Request $request): Response
     {
-        $this->subject = $this->getRepository()->find($request->get('id'));
+        $this->subject = $this->getSubjectRepository()->find($request->get('id'));
 
         if (!$this->getSubject()) {
             throw $this->createNotFoundException();
@@ -32,8 +34,12 @@ abstract class ViewerController extends BaseController implements CRUDInterface
         ]);
     }
 
-    protected function getRepository(): ServiceEntityRepository
+    protected function getSubjectRepository(): ServiceEntityRepository
     {
+        if (!$this->repository) {
+            $this->repository = $this->getDoctrine()->getRepository($this->getSubjectClass());
+        }
+
         return $this->repository;
     }
 

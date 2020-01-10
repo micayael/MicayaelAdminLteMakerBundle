@@ -16,9 +16,9 @@ abstract class CreatorController extends BaseController implements CRUDInterface
 
     abstract protected function getSubjectFormTypeClass(): string;
 
-    abstract protected function getTemplateName(): string;
-
     abstract protected function getTargetRouteName(): string;
+
+    abstract protected function getTemplateName(): string;
 
     public function __invoke(Request $request, TranslatorInterface $translator): Response
     {

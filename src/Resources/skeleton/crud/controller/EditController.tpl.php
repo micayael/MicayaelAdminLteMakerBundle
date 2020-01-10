@@ -2,8 +2,8 @@
 
 namespace <?= $namespace; ?>;
 
+use <?= $entity_full_class_name; ?>;
 use <?= $form_full_class_name; ?>;
-use <?= $repository_full_class_name; ?>;
 use Micayael\AdminLteMakerBundle\Framework\Base\CRUD\UpdaterController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -12,22 +12,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 */
 class <?= $class_name; ?> extends UpdaterController
 {
-    /**
-    * @required
-    */
-    public function setRepository(<?= $repository_class_name; ?> $<?= $repository_var; ?>): void
+    protected function getSubjectClass(): string
     {
-        $this->repository = $<?= $repository_var; ?>;
-    }
-
-    protected function getSubjectName(): string
-    {
-        return '<?= $entity_twig_var_singular; ?>';
+        return <?= $entity_class_name; ?>::class;
     }
 
     protected function getSubjectFormTypeClass(): string
     {
         return <?= $form_class_name; ?>::class;
+    }
+
+    protected function getSubjectName(): string
+    {
+        return '<?= $entity_twig_var_singular; ?>';
     }
 
     protected function getTargetRouteName(): string

@@ -14,6 +14,8 @@ abstract class CriteriaSearchController extends BaseController implements CRUDIn
      */
     protected $repository;
 
+    abstract protected function getSubjectClass(): string;
+
     abstract protected function getTemplateName(): string;
 
     public function __invoke(Request $request, PaginatorInterface $paginator): Response
@@ -33,14 +35,18 @@ abstract class CriteriaSearchController extends BaseController implements CRUDIn
         ]);
     }
 
-    protected function getRepository(): ServiceEntityRepository
+    protected function getSubjectRepository(): ServiceEntityRepository
     {
+        if (!$this->repository) {
+            $this->repository = $this->getDoctrine()->getRepository($this->getSubjectClass());
+        }
+
         return $this->repository;
     }
 
     protected function createQueryBuilder()
     {
-        return $this->repository->createQueryBuilder('o');
+        return $this->getSubjectRepository()->createQueryBuilder('o');
     }
 
     protected function getPaginatorLimit()
