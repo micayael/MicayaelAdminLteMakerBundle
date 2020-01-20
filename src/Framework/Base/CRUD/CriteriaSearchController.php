@@ -46,7 +46,9 @@ abstract class CriteriaSearchController extends BaseController implements CRUDIn
 
     protected function createQueryBuilder()
     {
-        return $this->getSubjectRepository()->createQueryBuilder('o');
+        $rootAlias = strtolower(substr($this->getSubjectClass(), strrpos($this->getSubjectClass(), '\\') + 1, 1));
+
+        return $this->getSubjectRepository()->createQueryBuilder($rootAlias);
     }
 
     protected function getPaginatorLimit()

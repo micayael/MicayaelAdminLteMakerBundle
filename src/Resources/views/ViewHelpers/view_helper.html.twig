@@ -1,0 +1,48 @@
+{% set primaryAction = actions | first %}
+
+<div class="text-center">
+
+{% if actions | length == 1 %}
+
+    {% if is_granted('ROLE_SUPER_ADMIN') or is_granted(primaryAction.role) %}
+        <a href="{{ primaryAction.url }}" class="btn btn-{{ primaryAction.type|default('primary') }}">
+            <i class="{% if primaryAction.icon is defined %}{{ primaryAction.icon }}{% endif %}" aria-hidden="true"></i> {{ primaryAction.text|trans([], 'MicayaelAdminLteMakerBundle') }}
+        </a>
+    {% endif %}
+
+{% elseif actions | length > 1 %}
+
+    <div class="btn-group">
+        <a href="{{ primaryAction.url }}" class="btn btn-{% if primaryAction.type is defined %}{{ primaryAction.type }}{% else %}primary{% endif %}">
+            <i class="{% if primaryAction.icon is defined %}{{ primaryAction.icon }}{% endif %}" aria-hidden="true"></i> {{ primaryAction.text|trans([], 'MicayaelAdminLteMakerBundle') }}
+        </a>
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+
+            {% for action in actions[1:] %}
+
+                {% if is_granted('ROLE_SUPER_ADMIN') or is_granted(action.role) %}
+
+                    {% if action.divider|default(false) %}
+                        <li role="separator" class="divider"></li>
+                    {% endif %}
+
+                    <li>
+                        <a href="{{ action.url }}" class="text-{% if action.type is defined %}{{ action.type }}{% else %}default{% endif %}">
+                            <i class="{% if action.icon is defined %}{{ action.icon }}{% endif %}" aria-hidden="true"></i> {{ action.text|trans([], 'MicayaelAdminLteMakerBundle') }}
+                        </a>
+                    </li>
+
+                {% endif %}
+
+            {% endfor %}
+
+        </ul>
+    </div>
+
+{% endif %}
+
+</div>

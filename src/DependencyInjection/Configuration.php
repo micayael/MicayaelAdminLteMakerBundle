@@ -16,6 +16,12 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('url_context')
                     ->defaultValue('/admin/')
                 ->end()
+                ->scalarNode('controller_base_namespace')
+                    ->defaultValue('Controller\\Admin\\')
+                ->end()
+                ->scalarNode('template_base_path')
+                    ->defaultValue('admin/')
+                ->end()
             ->end()
         ;
 

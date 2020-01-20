@@ -25,9 +25,7 @@ abstract class ViewerController extends BaseController implements CRUDInterface
     {
         $this->subject = $this->getSubjectRepository()->find($request->get('id'));
 
-        if (!$this->getSubject()) {
-            throw $this->createNotFoundException();
-        }
+        $this->throw404IfNotFound($this->getSubject());
 
         return $this->render($this->getTemplateName(), [
             $this->getSubjectName() => $this->getSubject(),

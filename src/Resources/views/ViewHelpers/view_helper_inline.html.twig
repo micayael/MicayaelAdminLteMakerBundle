@@ -1,0 +1,68 @@
+{% if actions %}
+
+    {% set primaryActions = [] %}
+    {% set dangerActions = [] %}
+
+    {% for action in actions %}
+
+        {% if app.request.attributes.get('_route') != action.extras.route and is_granted('ROLE_SUPER_ADMIN') or is_granted(action.role) %}
+
+            {% if action.type|default('secondary') not in ['danger'] %}
+
+                {% set primaryActions = primaryActions|merge([action]) %}
+
+            {% else %}
+
+                {% set dangerActions = dangerActions|merge([action]) %}
+
+            {% endif %}
+
+        {% endif %}
+
+    {% endfor %}
+
+    {% if primaryActions is not empty %}
+        <div class="col-lg-6">
+
+            {% set first = true %}
+
+            {% for action in primaryActions %}
+
+                {% if action.divider|default(false) and not first %}
+                    <span class="crud_show_actions_divider"> | </span>
+                {% endif %}
+
+                <a href="{{ action.url }}" class="btn btn-{{ action.type|default('default') }}">
+                    <i class="{% if action.icon is defined %}{{ action.icon }}{% endif %}" aria-hidden="true"></i> {{ action.text|trans([], 'MicayaelAdminLteMakerBundle') }}
+                </a>
+
+                {% set first = false %}
+
+            {% endfor %}
+
+        </div>
+    {% endif %}
+
+    {% if dangerActions is not empty %}
+        <div class="col-lg-6 text-right">
+
+            {% set first = true %}
+
+            {% for action in dangerActions %}
+
+                {% if action.divider|default(false) and not first %}
+                    <span class="crud_show_actions_divider"> | </span>
+                {% endif %}
+
+                <a href="{{ action.url }}" class="btn btn-{{ action.type|default('default') }}">
+                    <i class="{% if action.icon is defined %}{{ action.icon }}{% endif %}" aria-hidden="true"></i> {{ action.text|trans([], 'MicayaelAdminLteMakerBundle') }}
+                </a>
+
+                {% set first = false %}
+
+            {% endfor %}
+
+        </div>
+    {% endif %}
+
+{% endif %}

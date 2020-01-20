@@ -28,9 +28,7 @@ abstract class DestructorController extends BaseController implements CRUDInterf
     {
         $this->subject = $this->getSubjectRepository()->find($request->get('id'));
 
-        if (!$this->getSubject()) {
-            throw $this->createNotFoundException();
-        }
+        $this->throw404IfNotFound($this->getSubject());
 
         if ($request->isMethod('get')) {
             return $this->render($this->getTemplateName(), [
@@ -46,7 +44,7 @@ abstract class DestructorController extends BaseController implements CRUDInterf
             $entityManager->remove($this->getSubject());
             $entityManager->flush();
 
-            $this->addFlash('success', $translator->trans('crud.msg.delete', [], 'MicayaelAdminLteMakerBundle'));
+            $this->addSuccessMessage($translator->trans('crud.msg.delete', [], 'MicayaelAdminLteMakerBundle'));
         }
 
         return $this->redirectToRoute($this->getTargetRouteName());

@@ -1,25 +1,25 @@
 <?= $route_name; ?>_index:
     path: <?= $url_context; ?><?= $route_name; ?>
 
-    controller: App\Controller\<?= $entity_class_name; ?>\IndexController
+    controller: App\<?= $controller_base_namespace; ?>\IndexController
     methods: GET
 
 <?= $route_name; ?>_new:
     path: <?= $url_context; ?><?= $route_name; ?>/new
-    controller: App\Controller\<?= $entity_class_name; ?>\NewController
+    controller: App\<?= $controller_base_namespace; ?>\NewController
     methods: GET|POST
 
 <?= $route_name; ?>_show:
     path: <?= $url_context; ?><?= $route_name; ?>/{id}
-    controller: App\Controller\<?= $entity_class_name; ?>\ShowController
+    controller: App\<?= $controller_base_namespace; ?>\ShowController
     methods: GET
 
 <?= $route_name; ?>_edit:
     path: <?= $url_context; ?><?= $route_name; ?>/{id}/edit
-    controller: App\Controller\<?= $entity_class_name; ?>\EditController
+    controller: App\<?= $controller_base_namespace; ?>\EditController
     methods: GET|POST
 
 <?= $route_name; ?>_delete:
     path: <?= $url_context; ?><?= $route_name; ?>/{id}/delete
-    controller: App\Controller\<?= $entity_class_name; ?>\DeleteController
+    controller: App\<?= $controller_base_namespace; ?>\DeleteController
     methods: GET|DELETE

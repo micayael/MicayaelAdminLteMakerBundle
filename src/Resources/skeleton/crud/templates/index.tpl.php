@@ -48,19 +48,21 @@
                         <table class="table">
                             <thead>
                                 <tr>
+<?php $fields = 0; ?>
 <?php foreach ($entity_fields as $field): ?>
-<?php if ('id' === $field['fieldName']) {
+<?php if (in_array($field['fieldName'], ['id', 'revision'])) {
     continue;
 } ?>
+<?php ++$fields; ?>
                                     <th>{{ knp_pagination_sortable(pagination, '<?= ucfirst($field['fieldName']); ?>', '<?= substr($entity_twig_var_singular, 0, 1); ?>.<?= $field['fieldName']; ?>') }}</th>
 <?php endforeach; ?>
-                                    <th>{{ 'crud.list.actions'|trans({}, 'MicayaelAdminLteMakerBundle') }}</th>
+                                    <th class="text-center">{{ 'crud.list.actions'|trans({}, 'MicayaelAdminLteMakerBundle') }}</th>
                                 </tr>
                             </thead>
                             <tfoot>
                             <tr>
-                                <td>
-    
+                                <td colspan="<?= $fields + 1; ?>">
+
                                     {% include '@MicayaelAdminLteMaker/Partials/paginator.html.twig' %}
 
                                 </td>
@@ -71,7 +73,7 @@
                             {% for <?= $entity_twig_var_singular; ?> in pagination %}
                                 <tr>
 <?php foreach ($entity_fields as $field): ?>
-<?php if ('id' === $field['fieldName']) {
+<?php if (in_array($field['fieldName'], ['id', 'revision'])) {
     continue;
 } ?>
 <?php if ('boolean' === $field['type']): ?>
@@ -87,14 +89,12 @@
 <?php endif; ?>
 <?php endforeach; ?>
                                     <td>
-                                        {{ create_button('show', '<?= $route_name; ?>_show', {'<?= $entity_identifier; ?>': <?= $entity_twig_var_singular; ?>.<?= $entity_identifier; ?>}, 'ROLE_<?= $entity_class_name_upper; ?>_READ') }}
-                                        {{ create_button('edit', '<?= $route_name; ?>_edit', {'<?= $entity_identifier; ?>': <?= $entity_twig_var_singular; ?>.<?= $entity_identifier; ?>}, 'ROLE_<?= $entity_class_name_upper; ?>_UPDATE') }}
-                                        {{ create_button('delete', '<?= $route_name; ?>_delete', {'<?= $entity_identifier; ?>': <?= $entity_twig_var_singular; ?>.<?= $entity_identifier; ?>}, 'ROLE_<?= $entity_class_name_upper; ?>_DELETE') }}
+                                        {{ <?= $entity_twig_var_singular; ?>_actions(<?= $entity_twig_var_singular; ?>) }}
                                     </td>
                                 </tr>
                             {% else %}
                                 <tr>
-                                    <td colspan="<?= (count($entity_fields) + 1); ?>">{{ 'crud.list.no_records_found'|trans({}, 'MicayaelAdminLteMakerBundle') }}</td>
+                                    <td colspan="<?= $fields + 1; ?>">{{ 'crud.list.no_records_found'|trans({}, 'MicayaelAdminLteMakerBundle') }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>

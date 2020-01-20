@@ -163,20 +163,56 @@ class MakeCrud extends AbstractMaker
         ];
 
         $entityVarPlural = lcfirst(Inflector::pluralize($entityClassDetails->getShortName()));
-        $entityVarSingular = lcfirst(Inflector::singularize($entityClassDetails->getShortName()));
+        $question = new Question('$entityVarPlural', $entityVarPlural);
+        $entityVarPlural = $io->askQuestion($question);
+
+        $entityVarSingular = lcfirst($entityClassDetails->getShortName());
+        $question = new Question('$entityVarSingular', $entityVarSingular);
+        $entityVarSingular = $io->askQuestion($question);
+
+        //--------------------------------------------------------------------------------------------------------------
 
         $entityTwigVarPlural = Str::asTwigVariable($entityVarPlural);
+        $question = new Question('$entityTwigVarPlural', $entityTwigVarPlural);
+        $entityTwigVarPlural = $io->askQuestion($question);
+
         $entityTwigVarSingular = Str::asTwigVariable($entityVarSingular);
+        $question = new Question('$entityTwigVarSingular', $entityTwigVarSingular);
+        $entityTwigVarSingular = $io->askQuestion($question);
+
+        //--------------------------------------------------------------------------------------------------------------
 
         $routeName = $entityTwigVarSingular;
-        $templatesPath = $entityTwigVarSingular;
+        $question = new Question('$routeName', $routeName);
+        $routeName = $io->askQuestion($question);
+
+        $urlContext = $this->bundleConfig['url_context'];
+        $question = new Question('$urlContext', $urlContext);
+        $urlContext = $io->askQuestion($question);
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        $templatesPath = $this->bundleConfig['template_base_path'].$entityTwigVarSingular;
+        $question = new Question('$templatesPath', $templatesPath);
+        $templatesPath = $io->askQuestion($question);
+
+        //--------------------------------------------------------------------------------------------------------------
+
+        $controllerNamespace = $this->bundleConfig['controller_base_namespace'].$entityClassDetails->getRelativeNameWithoutSuffix().'\\';
+        $question = new Question('$controllerNamespace', $controllerNamespace);
+        $controllerNamespace = $io->askQuestion($question);
+
+        if ('\\' !== substr($controllerNamespace, strlen($controllerNamespace) - 1, 1)) {
+            $controllerNamespace .= '\\';
+        }
+        //--------------------------------------------------------------------------------------------------------------
 
         foreach ($controllers as $controller) {
             $controllerCapitalize = ucfirst($controller);
 
             $controllerClassDetails = $generator->createClassNameDetails(
                 $controllerCapitalize.'Controller',
-                'Controller\\'.$entityClassDetails->getRelativeNameWithoutSuffix().'\\',
+                $controllerNamespace,
                 'Controller'
             );
 
@@ -212,6 +248,16 @@ class MakeCrud extends AbstractMaker
                 'entity_identifier' => $entityDoctrineDetails->getIdentifier(),
                 'entity_class_name_upper' => strtoupper($entityClassDetails->getShortName()),
             ],
+            '_show_data' => [
+                'entity_class_name' => $entityClassDetails->getShortName(),
+                'entity_class_name_plural' => ucfirst($entityVarPlural),
+                'entity_class_name_upper' => strtoupper($entityClassDetails->getShortName()),
+                'entity_twig_var_singular' => $entityTwigVarSingular,
+                'entity_identifier' => $entityDoctrineDetails->getIdentifier(),
+                'entity_fields' => $entityDoctrineDetails->getDisplayFields(),
+                'route_name' => $routeName,
+                'templatesPath' => $templatesPath,
+            ],
             'edit' => [
                 'entity_class_name' => $entityClassDetails->getShortName(),
                 'entity_class_name_plural' => ucfirst($entityVarPlural),
@@ -244,6 +290,7 @@ class MakeCrud extends AbstractMaker
                 'entity_identifier' => $entityDoctrineDetails->getIdentifier(),
                 'entity_fields' => $entityDoctrineDetails->getDisplayFields(),
                 'route_name' => $routeName,
+                'templatesPath' => $templatesPath,
             ],
             'delete' => [
                 'entity_class_name' => $entityClassDetails->getShortName(),
@@ -253,6 +300,7 @@ class MakeCrud extends AbstractMaker
                 'entity_identifier' => $entityDoctrineDetails->getIdentifier(),
                 'entity_fields' => $entityDoctrineDetails->getDisplayFields(),
                 'route_name' => $routeName,
+                'templatesPath' => $templatesPath,
             ],
         ];
 
@@ -272,7 +320,19 @@ class MakeCrud extends AbstractMaker
             [
                 'route_name' => $routeName,
                 'entity_class_name' => $entityClassDetails->getRelativeNameWithoutSuffix(),
-                'url_context' => $this->bundleConfig['url_context'],
+                'url_context' => $urlContext,
+                'controller_base_namespace' => substr($controllerNamespace, 0, strlen($controllerNamespace) - 1),
+            ]
+        );
+
+        // Actions View Helper
+        $generator->generateClass(
+            'App\\Twig\\ViewHelper\\Action\\'.$entityClassDetails->getRelativeNameWithoutSuffix().'ActionsViewHelper',
+            __DIR__.'/../Resources/skeleton/crud/ActionsViewHelper.tpl.php',
+            [
+                'entity_twig_var_singular' => $entityTwigVarSingular,
+                'entity_class_name_upper' => strtoupper($entityClassDetails->getShortName()),
+                'route_name' => $routeName,
             ]
         );
 
@@ -280,6 +340,6 @@ class MakeCrud extends AbstractMaker
 
         $this->writeSuccessMessage($io);
 
-        $io->text(sprintf('Next: Check your new CRUD by going to <fg=yellow>%s/</>', $this->bundleConfig['url_context'].$routeName));
+        $io->text(sprintf('Next: Check your new CRUD by going to <fg=yellow>%s/</>', $urlContext.$routeName));
     }
 }

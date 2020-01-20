@@ -35,7 +35,7 @@ abstract class CreatorController extends BaseController implements CRUDInterface
             $entityManager->persist($this->getSubject());
             $entityManager->flush();
 
-            $this->addFlash('success', $translator->trans('crud.msg.new', [], 'MicayaelAdminLteMakerBundle'));
+            $this->addSuccessMessage($translator->trans('crud.msg.new', [], 'MicayaelAdminLteMakerBundle'));
 
             return $this->redirectToRoute($this->getTargetRouteName());
         }

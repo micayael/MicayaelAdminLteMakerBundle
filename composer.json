@@ -22,7 +22,8 @@
         "symfony/security": "~4.3",
         "twig/twig": "2.*",
         "knplabs/knp-paginator-bundle": "^4.1",
-        "symfony/translation": "^4.3"
+        "symfony/translation": "^4.3",
+        "nzo/url-encryptor-bundle": "^4.2"
     },
     "autoload": {
         "psr-4": {

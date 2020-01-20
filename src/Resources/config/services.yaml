@@ -12,3 +12,8 @@ services:
         arguments: ['@router', '@translator', '@security.authorization_checker']
         tags:
             - { name: twig.extension }
+
+    Micayael\AdminLteMakerBundle\EventSubscriber\RedirectExceptionSubscriber:
+        arguments: ['@router', '@session.flash_bag']
+        tags:
+            - { name: kernel.event_subscriber }

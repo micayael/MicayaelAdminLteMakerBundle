@@ -21,6 +21,7 @@ crud:
         new: Registro creado con éxito.
         edit: Registro actualizado con éxito.
         delete: Registro eliminado con éxito.
+        optimistic_lock_detected: Otro usuario ha modificado este registro antes de que hayas confirmado tu acción, aplica las modificaciones aquí.
     list:
         no_records_found: No se encontraron registros
         actions: Acciones

@@ -2,7 +2,7 @@
 
 namespace <?= $namespace; ?>;
 
-use <?= $entity_full_class_name ?>;
+use <?= $entity_full_class_name; ?>;
 use Micayael\AdminLteMakerBundle\Framework\Base\CRUD\DestructorController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
